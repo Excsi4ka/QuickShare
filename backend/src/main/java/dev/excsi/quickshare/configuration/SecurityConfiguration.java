@@ -43,6 +43,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(
                             "/api/auth/login",
                             "/api/auth/register",
+                            "/api/auth/refresh",
                             "/api/auth/oauth/**",
                             "/api/public/**",
                             "/",
