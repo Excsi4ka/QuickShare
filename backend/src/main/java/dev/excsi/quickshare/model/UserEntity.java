@@ -23,7 +23,7 @@ public class UserEntity implements UserDetails {
     private UUID id;
 
     @Column(name = "username", nullable = false)
-    private String username;
+    private String displayName;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -48,16 +48,11 @@ public class UserEntity implements UserDetails {
         return email;
     }
 
-
     public UUID getId() {
         return id;
     }
 
-    public String getEmail() {
-        return username;
-    }
-
     public String getDisplayName() {
-        return username;
+        return displayName;
     }
 }

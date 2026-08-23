@@ -1,6 +1,8 @@
 package dev.excsi.quickshare.controller;
 
 import dev.excsi.quickshare.dto.EmailPasswordDto;
+import dev.excsi.quickshare.dto.JwtTokenResponse;
+import dev.excsi.quickshare.dto.RegisterUserDto;
 import dev.excsi.quickshare.dto.UserDto;
 import dev.excsi.quickshare.model.UserEntity;
 import dev.excsi.quickshare.service.UserService;
@@ -23,15 +25,19 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public void login(@RequestBody EmailPasswordDto emailAndPassword) {
+    @PostMapping("/register")
+    public void register(@RequestBody RegisterUserDto registerUser) {
 
+    }
+
+    @PostMapping("/login")
+    public JwtTokenResponse login(@RequestBody EmailPasswordDto emailAndPassword) {
+        return new JwtTokenResponse("");
     }
 
     @GetMapping("/me")
     public UserDto me(JwtAuthenticationToken authenticationToken) {
         UserEntity user = userService.getUserByUUID(UUID.fromString(authenticationToken.getName()));
-        return new UserDto(user.getId(), user.getDisplayName(), user.getEmail());
+        return new UserDto(user.getId(), user.getUsername(), user.getDisplayName());
     }
-
 }
