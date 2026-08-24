@@ -3,7 +3,6 @@ package dev.excsi.quickshare.configuration;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
-import dev.excsi.quickshare.security.AuthSuccessHandler;
 import dev.excsi.quickshare.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,25 +35,24 @@ public class SecurityConfiguration {
     private String jwtSecretKey;
 
     @Bean
-    public SecurityFilterChain buildSecurity(HttpSecurity http, AuthSuccessHandler successHandler) {
+    public SecurityFilterChain buildSecurity(HttpSecurity http) {
 
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(
-                            "/api/auth/login",
-                            "/api/auth/register",
-                            "/api/auth/refresh",
-                            "/api/auth/oauth/**",
-                            "/api/public/**",
-                            "/",
-                            "/register",
-                            "/login",
-                            "/download/**",
-                            "/index.html",
-                            "/assets/**",
-                            "/error"
-                    ).permitAll()
-                    .anyRequest().authenticated();
+                                    "/api/auth/login",
+                                    "/api/auth/register",
+                                    "/api/auth/refresh",
+                                    "/api/public/**",
+                                    "/",
+                                    "/register",
+                                    "/login",
+                                    "/download/**",
+                                    "/index.html",
+                                    "/assets/**",
+                                    "/error"
+                            ).permitAll()
+                            .anyRequest().authenticated();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -71,10 +69,6 @@ public class SecurityConfiguration {
 
                 .oauth2ResourceServer(oAuthServer -> {
                     oAuthServer.jwt(Customizer.withDefaults());
-                })
-                .oauth2Login(oAuthLogin -> {
-                    oAuthLogin.authorizationEndpoint(endpoint -> endpoint.baseUri("/api/auth/oauth2"));
-                    oAuthLogin.successHandler(successHandler);
                 })
                 .build();
     }

@@ -26,13 +26,32 @@ public class UserEntity implements UserDetails {
     @Column(name = "username", nullable = false)
     private String displayName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    public UserEntity() {}
+    public UserEntity() {
+    }
+
+    public UserEntity(String displayName, String email, String passwordHash) {
+        this.displayName = displayName;
+        this.email = email;
+        this.password = passwordHash;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -48,13 +67,5 @@ public class UserEntity implements UserDetails {
     @NonNull
     public String getUsername() {
         return email;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getDisplayName() {
-        return displayName;
     }
 }
