@@ -23,14 +23,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
-	//implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:3.3.0')
-	//implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
+	implementation 'org.springframework.boot:spring-boot-starter-flyway'
+	runtimeOnly 'org.flywaydb:flyway-database-postgresql'
+
+	implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:4.1.0')
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
 
 	runtimeOnly 'org.postgresql:postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

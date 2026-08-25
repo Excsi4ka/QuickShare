@@ -4,17 +4,16 @@ services:
       context: .
     image: quickshare-app:latest
     ports:
-      - "8080:8080"
+      - "8081:8080"
     environment:
       DATABASE_URL: jdbc:postgresql://postgres:5432/quickshare
-      POSTGRES_USER: quickshare
-      POSTGRES_PASSWORD: quickshare
-#      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
-#      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
-#      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
-#      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
-      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
-      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      DB_USER: quickshare
+      DB_PASSWORD: quickshare
+      AWS_REGION: ${AWS_REGION}
+      AWS_KEY: ${AWS_KEY}
+      AWS_SECRET: ${AWS_SECRET}
+      S3_BUCKET: ${S3_BUCKET}
+      JWT_SECRET: ${JWT_SECRET}
     depends_on:
       - postgres
 
