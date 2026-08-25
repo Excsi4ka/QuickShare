@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
@@ -19,7 +20,7 @@ public class JwtTokenService {
     }
 
     public String createAccessToken(UserEntity user) {
-        Instant now = Instant.now();
+        Instant now = Instant.now(Clock.systemUTC());
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)

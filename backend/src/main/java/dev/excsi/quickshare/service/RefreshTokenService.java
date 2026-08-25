@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
@@ -26,7 +27,7 @@ public class RefreshTokenService {
     }
 
     public RefreshTokenEntity createToken(UserEntity user) {
-        Instant now = Instant.now();
+        Instant now = Instant.now(Clock.systemUTC());
         RefreshTokenEntity refreshToken = new RefreshTokenEntity(
                 UUID.randomUUID(),
                 user,
@@ -43,7 +44,7 @@ public class RefreshTokenService {
         RefreshTokenEntity currentToken = refreshTokenRepository.findById(refreshTokenId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
 
-        if (currentToken.getExpiresAt().isBefore(Instant.now())) {
+        if (currentToken.getExpiresAt().isBefore(Instant.now(Clock.systemUTC()))) {
             refreshTokenRepository.delete(currentToken);
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
