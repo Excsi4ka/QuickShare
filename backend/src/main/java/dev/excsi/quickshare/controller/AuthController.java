@@ -1,5 +1,6 @@
 package dev.excsi.quickshare.controller;
 
+import dev.excsi.quickshare.dto.CsrfTokenResponse;
 import dev.excsi.quickshare.dto.EmailPasswordDto;
 import dev.excsi.quickshare.dto.JwtTokenResponse;
 import dev.excsi.quickshare.dto.RegisterUserDto;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,5 +113,11 @@ public class AuthController {
                 .maxAge(RefreshTokenService.REFRESH_TOKEN_TTL)
                 .sameSite("Lax")
                 .build();
+    }
+
+
+    @GetMapping("csrf")
+    public CsrfTokenResponse csrf(CsrfToken csrfToken) {
+        return new CsrfTokenResponse(csrfToken.getToken());
     }
 }
